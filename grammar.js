@@ -4,21 +4,27 @@ module.exports = grammar({
   extras: ($) => [$.comment, /\s/],
 
   rules: {
-    source_file: ($) => repeat($.expression),
+    source_file: ($) => repeat($.statement),
+
+    statement: ($) => choice($.definition, $.expression),
 
     expression: ($) =>
       choice(
-        $.definition,
         $.function,
         $.identifier,
         $.integer,
         $.float,
         $.string,
-        $.binary_expression
+        $.binary_expression,
+        $.type,
+        $.call,
+        $.conditional,
+        "undefined"
       ),
 
     binary_expression: ($) =>
       choice(
+        prec.left(4, seq($.expression, ".", $.identifier)),
         prec.left(3, seq($.expression, "*", $.expression)),
         prec.left(3, seq($.expression, "/", $.expression)),
         prec.left(3, seq($.expression, "%", $.expression)),
@@ -32,35 +38,65 @@ module.exports = grammar({
     definition: ($) =>
       seq(
         optional("mut"),
-        $.identifier,
-        optional(seq(":", $.type)),
+        field("name", $.identifier),
+        optional(seq(":", field("type", $.type))),
         "=",
-        $.expression
+        field("value", $.expression)
       ),
 
     function: ($) =>
+      prec(
+        10,
+        seq(
+          field("declaration", $.function_declaration),
+          field("body", $.block)
+        )
+      ),
+
+    function_declaration: ($) =>
       seq(
         "fn",
         field("parameters", $.parameters),
-        field("return_type", $.type),
-        field("body", $.block)
+        field("return_type", $.type)
       ),
 
-    parameter: ($) => seq(optional("mut"), $.identifier, ":", $.type),
+    parameter: ($) =>
+      seq(
+        optional("mut"),
+        field("name", $.identifier),
+        ":",
+        field("type", $.type)
+      ),
 
     parameters: ($) =>
       seq("(", optional(seq($.parameter, repeat(seq(",", $.parameter)))), ")"),
 
-    conditional: ($) => seq("if", $.expression, $.block, "else", $.block),
+    argument: ($) => seq(optional("mut"), $.expression),
 
-    block: ($) => seq("{", repeat($.expression), "}"),
+    arguments: ($) =>
+      seq("(", optional(seq($.argument, repeat(seq(",", $.argument)))), ")"),
 
-    type: ($) => choice($.primitive_type, $.array_type),
+    call: ($) =>
+      seq(field("function", $.identifier), field("arguments", $.arguments)),
+
+    conditional: ($) =>
+      seq(
+        "if",
+        $.expression,
+        $.block,
+        repeat(seq("else if", $.block)),
+        "else",
+        $.block
+      ),
+
+    block: ($) => seq("{", repeat($.statement), "}"),
+
+    type: ($) => choice($.primitive_type, $.array_type, $.function_declaration),
 
     primitive_type: () =>
       choice("bool", "u8", "u32", "u64", "i32", "i64", "f32", "f64"),
 
-    array_type: ($) => seq("[", "]", $.type),
+    array_type: ($) => seq("[", optional($.integer), "]", $.type),
 
     identifier: () => /[_a-zA-Z][_a-zA-Z0-9]*/,
     integer: () => /\d+/,

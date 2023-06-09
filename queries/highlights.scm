@@ -4,6 +4,7 @@
 
 [
   "mut"
+  "undefined"
 ] @keyword
 
 [
@@ -22,6 +23,10 @@
 (comment) @comment @spell
 
 (string) @string
+
+(call function: (identifier) @function.call)
+
+(parameter name: (identifier) @parameter)
 
 [
   "+"
@@ -42,3 +47,5 @@
   "{"
   "}"
 ] @punctuation.bracket
+
+; ["," "." ":"] @punctuation.delimiter
