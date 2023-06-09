@@ -66,6 +66,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "array"
+        },
+        {
+          "type": "SYMBOL",
           "name": "call"
         },
         {
@@ -79,6 +83,10 @@
         {
           "type": "SYMBOL",
           "name": "method_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "consumed_method_call"
         },
         {
           "type": "STRING",
@@ -858,7 +866,7 @@
     },
     "member": {
       "type": "PREC",
-      "value": 10,
+      "value": 9,
       "content": {
         "type": "SEQ",
         "members": [
@@ -897,6 +905,23 @@
           }
         }
       ]
+    },
+    "consumed_method_call": {
+      "type": "PREC",
+      "value": 10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "consume"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "method_call"
+          }
+        ]
+      }
     },
     "conditional": {
       "type": "SEQ",
@@ -996,7 +1021,7 @@
         }
       ]
     },
-    "array_type": {
+    "array": {
       "type": "SEQ",
       "members": [
         {
@@ -1007,8 +1032,29 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "integer"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "expression"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "expression"
+                      }
+                    ]
+                  }
+                }
+              ]
             },
             {
               "type": "BLANK"
@@ -1018,12 +1064,25 @@
         {
           "type": "STRING",
           "value": "]"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expression"
         }
       ]
+    },
+    "array_type": {
+      "type": "PREC",
+      "value": 10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "array"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        ]
+      }
     },
     "identifier": {
       "type": "PATTERN",

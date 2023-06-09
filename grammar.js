@@ -24,10 +24,12 @@ module.exports = grammar({
         $.binary_expression,
         $.primitive_type,
         $.array_type,
+        $.array,
         $.call,
         $.conditional,
         $.member,
         $.method_call,
+        $.consumed_method_call,
         "undefined"
       ),
 
@@ -130,9 +132,11 @@ module.exports = grammar({
       seq(field("function", $.identifier), field("arguments", $.arguments)),
 
     member: ($) =>
-      prec(10, seq($.expression, ".", field("field", $.identifier))),
+      prec(9, seq($.expression, ".", field("field", $.identifier))),
 
     method_call: ($) => seq($.member, field("arguments", $.arguments)),
+
+    consumed_method_call: ($) => prec(10, seq("consume", $.method_call)),
 
     conditional: ($) =>
       seq(
@@ -149,7 +153,14 @@ module.exports = grammar({
     primitive_type: () =>
       choice("bool", "u8", "u32", "u64", "i32", "i64", "f32", "f64"),
 
-    array_type: ($) => seq("[", optional($.integer), "]", $.expression),
+    array: ($) =>
+      seq(
+        "[",
+        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        "]"
+      ),
+
+    array_type: ($) => prec(10, seq($.array, $.expression)),
 
     identifier: () => /[_a-zA-Z][_a-zA-Z0-9]*/,
     integer: () => /\d+/,
