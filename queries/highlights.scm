@@ -1,10 +1,9 @@
-[
-  "fn"
-] @keyword.function
+"fn" @keyword.function
 
 [
   "mut"
   "undefined"
+  "struct"
 ] @keyword
 
 [
@@ -26,6 +25,8 @@
 (string) @string
 
 (function_definition name: (identifier) @function)
+
+(struct_definition name: (identifier) @type)
 
 (call function: (identifier) @function.call)
 

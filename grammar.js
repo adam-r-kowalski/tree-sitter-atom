@@ -6,9 +6,15 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($.statement),
 
-    statement: ($) => choice($.definition, $.function_definition, $.expression),
+    statement: ($) =>
+      choice(
+        $.definition,
+        $.function_definition,
+        $.struct_definition,
+        $.expression
+      ),
 
-    expression_without_function: ($) =>
+    generic_expression: ($) =>
       choice(
         $.identifier,
         $.integer,
@@ -23,7 +29,7 @@ module.exports = grammar({
         "undefined"
       ),
 
-    expression: ($) => choice($.expression_without_function, $.function),
+    expression: ($) => choice($.generic_expression, $.function, $.struct),
 
     binary_expression: ($) =>
       choice(
@@ -43,7 +49,24 @@ module.exports = grammar({
         field("name", $.identifier),
         optional(seq(":", field("type", $.type))),
         "=",
-        field("value", $.expression_without_function)
+        field("value", $.generic_expression)
+      ),
+
+    struct_definition: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional(seq(":", field("type", $.type))),
+        "=",
+        field("value", $.struct)
+      ),
+
+    struct: ($) =>
+      seq(
+        "struct",
+        "{",
+        repeat(seq($.identifier, ":", $.type, ",")),
+        optional(seq($.identifier, ":", $.type)),
+        "}"
       ),
 
     function_definition: ($) =>
@@ -81,7 +104,8 @@ module.exports = grammar({
     parameters: ($) =>
       seq("(", optional(seq($.parameter, repeat(seq(",", $.parameter)))), ")"),
 
-    argument: ($) => seq(optional("mut"), $.expression),
+    argument: ($) =>
+      seq(optional("mut"), optional(seq($.identifier, "=")), $.expression),
 
     arguments: ($) =>
       seq("(", optional(seq($.argument, repeat(seq(",", $.argument)))), ")"),
