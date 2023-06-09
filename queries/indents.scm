@@ -1,5 +1,3 @@
-[
-  (block)
-] @indent.begin
+(block "{") @indent.begin
 
 (block "}") @indent.end

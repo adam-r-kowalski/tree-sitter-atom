@@ -4,10 +4,13 @@
   "mut"
   "linear"
   "consume"
-  "undefined"
   "struct"
   "test"
 ] @keyword
+
+[
+  "undefined"
+] @constant.builtin
 
 [
   "if"
@@ -15,10 +18,7 @@
   "else if"
 ] @conditional
 
-[
-  (primitive_type)
-  (array_type)
-] @type
+(primitive_type) @type.builtin
 
 (integer) @number
 
@@ -32,9 +32,12 @@
 
 (function_definition name: (identifier) @function)
 
-(struct_definition name: (identifier) @type)
+(struct_definition name: (identifier) @type.definition)
 
 (call function: (identifier) @function.call)
+
+((identifier) @constant.builtin
+	(#any-of? @constant.builtin "assert" "foreign_import" "foreign_export"))
 
 (method_call
   (member field: (identifier) @method.call))
