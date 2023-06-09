@@ -42,11 +42,11 @@
       "required": true,
       "types": [
         {
-          "type": "integer",
+          "type": "expression",
           "named": true
         },
         {
-          "type": "type",
+          "type": "integer",
           "named": true
         }
       ]
@@ -146,7 +146,7 @@
         "required": false,
         "types": [
           {
-            "type": "type",
+            "type": "expression",
             "named": true
           }
         ]
@@ -216,6 +216,16 @@
     "type": "function_declaration",
     "named": true,
     "fields": {
+      "generics": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "generics",
+            "named": true
+          }
+        ]
+      },
       "parameters": {
         "multiple": false,
         "required": true,
@@ -231,7 +241,7 @@
         "required": true,
         "types": [
           {
-            "type": "type",
+            "type": "expression",
             "named": true
           }
         ]
@@ -257,7 +267,7 @@
         "required": false,
         "types": [
           {
-            "type": "type",
+            "type": "expression",
             "named": true
           }
         ]
@@ -282,6 +292,10 @@
       "multiple": false,
       "required": false,
       "types": [
+        {
+          "type": "array_type",
+          "named": true
+        },
         {
           "type": "binary_expression",
           "named": true
@@ -315,11 +329,26 @@
           "named": true
         },
         {
-          "type": "string",
+          "type": "primitive_type",
           "named": true
         },
         {
-          "type": "type",
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "generics",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         }
       ]
@@ -396,7 +425,7 @@
         "required": true,
         "types": [
           {
-            "type": "type",
+            "type": "expression",
             "named": true
           }
         ]
@@ -461,6 +490,10 @@
         {
           "type": "struct_definition",
           "named": true
+        },
+        {
+          "type": "test_definition",
+          "named": true
         }
       ]
     }
@@ -479,11 +512,11 @@
       "required": false,
       "types": [
         {
-          "type": "identifier",
+          "type": "expression",
           "named": true
         },
         {
-          "type": "type",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -508,7 +541,7 @@
         "required": false,
         "types": [
           {
-            "type": "type",
+            "type": "expression",
             "named": true
           }
         ]
@@ -526,23 +559,26 @@
     }
   },
   {
-    "type": "type",
+    "type": "test_definition",
     "named": true,
-    "fields": {},
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": false,
       "required": true,
       "types": [
         {
-          "type": "array_type",
-          "named": true
-        },
-        {
-          "type": "function_declaration",
-          "named": true
-        },
-        {
-          "type": "primitive_type",
+          "type": "block",
           "named": true
         }
       ]
@@ -629,6 +665,10 @@
     "named": true
   },
   {
+    "type": "consume",
+    "named": false
+  },
+  {
     "type": "else",
     "named": false
   },
@@ -673,11 +713,19 @@
     "named": true
   },
   {
+    "type": "linear",
+    "named": false
+  },
+  {
     "type": "mut",
     "named": false
   },
   {
     "type": "struct",
+    "named": false
+  },
+  {
+    "type": "test",
     "named": false
   },
   {

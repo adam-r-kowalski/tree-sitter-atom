@@ -2,8 +2,11 @@
 
 [
   "mut"
+  "linear"
+  "consume"
   "undefined"
   "struct"
+  "test"
 ] @keyword
 
 [
@@ -12,7 +15,10 @@
   "else if"
 ] @conditional
 
-(type) @type
+[
+  (primitive_type)
+  (array_type)
+] @type
 
 (integer) @number
 

@@ -11,6 +11,7 @@ module.exports = grammar({
         $.definition,
         $.function_definition,
         $.struct_definition,
+        $.test_definition,
         $.expression
       ),
 
@@ -21,7 +22,8 @@ module.exports = grammar({
         $.float,
         $.string,
         $.binary_expression,
-        $.type,
+        $.primitive_type,
+        $.array_type,
         $.call,
         $.conditional,
         $.member,
@@ -45,17 +47,19 @@ module.exports = grammar({
 
     definition: ($) =>
       seq(
-        optional("mut"),
+        optional(choice("mut", "linear")),
         field("name", $.identifier),
-        optional(seq(":", field("type", $.type))),
+        optional(seq(":", field("type", $.expression))),
         "=",
         field("value", $.generic_expression)
       ),
 
+    test_definition: ($) => seq("test", field("name", $.string), $.block),
+
     struct_definition: ($) =>
       seq(
         field("name", $.identifier),
-        optional(seq(":", field("type", $.type))),
+        optional(seq(":", field("type", $.expression))),
         "=",
         field("value", $.struct)
       ),
@@ -64,15 +68,15 @@ module.exports = grammar({
       seq(
         "struct",
         "{",
-        repeat(seq($.identifier, ":", $.type, ",")),
-        optional(seq($.identifier, ":", $.type)),
+        repeat(seq($.identifier, ":", $.expression, ",")),
+        optional(seq($.identifier, ":", $.expression)),
         "}"
       ),
 
     function_definition: ($) =>
       seq(
         field("name", $.identifier),
-        optional(seq(":", field("type", $.type))),
+        optional(seq(":", field("type", $.expression))),
         "=",
         field("value", $.function)
       ),
@@ -86,26 +90,38 @@ module.exports = grammar({
         )
       ),
 
+    generics: ($) =>
+      seq(
+        "[",
+        optional(seq($.identifier, repeat(seq(",", $.identifier)))),
+        "]"
+      ),
+
     function_declaration: ($) =>
       seq(
         "fn",
+        field("generics", optional($.generics)),
         field("parameters", $.parameters),
-        field("return_type", $.type)
+        field("return_type", $.expression)
       ),
 
     parameter: ($) =>
       seq(
-        optional("mut"),
+        optional(choice("mut", "consume")),
         field("name", $.identifier),
         ":",
-        field("type", $.type)
+        field("type", $.expression)
       ),
 
     parameters: ($) =>
       seq("(", optional(seq($.parameter, repeat(seq(",", $.parameter)))), ")"),
 
     argument: ($) =>
-      seq(optional("mut"), optional(seq($.identifier, "=")), $.expression),
+      seq(
+        optional(choice("mut", "consume")),
+        optional(seq($.identifier, "=")),
+        $.expression
+      ),
 
     arguments: ($) =>
       seq("(", optional(seq($.argument, repeat(seq(",", $.argument)))), ")"),
@@ -113,7 +129,8 @@ module.exports = grammar({
     call: ($) =>
       seq(field("function", $.identifier), field("arguments", $.arguments)),
 
-    member: ($) => seq($.expression, ".", field("field", $.identifier)),
+    member: ($) =>
+      prec(10, seq($.expression, ".", field("field", $.identifier))),
 
     method_call: ($) => seq($.member, field("arguments", $.arguments)),
 
@@ -129,12 +146,10 @@ module.exports = grammar({
 
     block: ($) => seq("{", repeat($.statement), "}"),
 
-    type: ($) => choice($.primitive_type, $.array_type, $.function_declaration),
-
     primitive_type: () =>
       choice("bool", "u8", "u32", "u64", "i32", "i64", "f32", "f64"),
 
-    array_type: ($) => seq("[", optional($.integer), "]", $.type),
+    array_type: ($) => seq("[", optional($.integer), "]", $.expression),
 
     identifier: () => /[_a-zA-Z][_a-zA-Z0-9]*/,
     integer: () => /\d+/,
