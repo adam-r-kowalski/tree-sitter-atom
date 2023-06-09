@@ -59,10 +59,6 @@
         {
           "type": "expression",
           "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
         }
       ]
     }
@@ -200,6 +196,14 @@
           "named": true
         },
         {
+          "type": "member",
+          "named": true
+        },
+        {
+          "type": "method_call",
+          "named": true
+        },
+        {
           "type": "string",
           "named": true
         },
@@ -260,6 +264,58 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "member",
+    "named": true,
+    "fields": {
+      "field": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "method_call",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "arguments",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "member",
+          "named": true
+        }
+      ]
     }
   },
   {

@@ -19,12 +19,13 @@ module.exports = grammar({
         $.type,
         $.call,
         $.conditional,
+        $.member,
+        $.method_call,
         "undefined"
       ),
 
     binary_expression: ($) =>
       choice(
-        prec.left(4, seq($.expression, ".", $.identifier)),
         prec.left(3, seq($.expression, "*", $.expression)),
         prec.left(3, seq($.expression, "/", $.expression)),
         prec.left(3, seq($.expression, "%", $.expression)),
@@ -46,7 +47,7 @@ module.exports = grammar({
 
     function: ($) =>
       prec(
-        10,
+        9,
         seq(
           field("declaration", $.function_declaration),
           field("body", $.block)
@@ -78,6 +79,10 @@ module.exports = grammar({
 
     call: ($) =>
       seq(field("function", $.identifier), field("arguments", $.arguments)),
+
+    member: ($) => seq($.expression, ".", field("field", $.identifier)),
+
+    method_call: ($) => seq($.member, field("arguments", $.arguments)),
 
     conditional: ($) =>
       seq(

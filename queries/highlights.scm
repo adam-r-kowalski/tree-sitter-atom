@@ -26,6 +26,9 @@
 
 (call function: (identifier) @function.call)
 
+(method_call
+  (member field: (identifier) @method.call))
+
 (parameter name: (identifier) @parameter)
 
 [
