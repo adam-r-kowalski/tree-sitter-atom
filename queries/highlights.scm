@@ -24,6 +24,8 @@
 
 (string) @string
 
+(function_definition name: (identifier) @function)
+
 (call function: (identifier) @function.call)
 
 (method_call
@@ -51,4 +53,4 @@
   "}"
 ] @punctuation.bracket
 
-; ["," "." ":"] @punctuation.delimiter
+["," "." ":"] @punctuation.delimiter

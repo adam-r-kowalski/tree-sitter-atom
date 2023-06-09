@@ -6,11 +6,10 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($.statement),
 
-    statement: ($) => choice($.definition, $.expression),
+    statement: ($) => choice($.definition, $.function_definition, $.expression),
 
-    expression: ($) =>
+    expression_without_function: ($) =>
       choice(
-        $.function,
         $.identifier,
         $.integer,
         $.float,
@@ -23,6 +22,8 @@ module.exports = grammar({
         $.method_call,
         "undefined"
       ),
+
+    expression: ($) => choice($.expression_without_function, $.function),
 
     binary_expression: ($) =>
       choice(
@@ -42,7 +43,15 @@ module.exports = grammar({
         field("name", $.identifier),
         optional(seq(":", field("type", $.type))),
         "=",
-        field("value", $.expression)
+        field("value", $.expression_without_function)
+      ),
+
+    function_definition: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional(seq(":", field("type", $.type))),
+        "=",
+        field("value", $.function)
       ),
 
     function: ($) =>
