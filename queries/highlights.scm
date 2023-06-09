@@ -10,6 +10,7 @@
 [
   "if"
   "else"
+  "else if"
 ] @conditional
 
 (type) @type
