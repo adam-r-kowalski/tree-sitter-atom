@@ -1,0 +1,17 @@
+==============================
+function definition
+==============================
+start = fn() i32 {
+    42
+}
+---
+(source_file
+  (expression
+    (definition
+      (identifier)
+      (expression
+        (function
+          (type
+            (primitive_type))
+          (expression
+            (integer)))))))
