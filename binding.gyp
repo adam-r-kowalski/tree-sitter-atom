@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "tree_sitter_Pulse_binding",
+      "target_name": "tree_sitter_Zap_binding",
       "include_dirs": [
         "<!(node -e \"require('nan')\")",
         "src"

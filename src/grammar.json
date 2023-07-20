@@ -1,5 +1,5 @@
 {
-  "name": "pulse",
+  "name": "zap",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -1068,4 +1068,3 @@
   "inline": [],
   "supertypes": []
 }
-
