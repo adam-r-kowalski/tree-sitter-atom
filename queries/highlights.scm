@@ -2,7 +2,7 @@
 
 [
   "mut"
-  "linear"
+  "signal"
   "consume"
   "struct"
   "test"

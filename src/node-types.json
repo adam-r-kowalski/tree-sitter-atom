@@ -49,25 +49,6 @@
     }
   },
   {
-    "type": "array_type",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "array",
-          "named": true
-        },
-        {
-          "type": "expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "binary_expression",
     "named": true,
     "fields": {},
@@ -324,10 +305,6 @@
       "types": [
         {
           "type": "array",
-          "named": true
-        },
-        {
-          "type": "array_type",
           "named": true
         },
         {
@@ -731,6 +708,10 @@
     "named": false
   },
   {
+    "type": "html",
+    "named": false
+  },
+  {
     "type": "i32",
     "named": false
   },
@@ -751,11 +732,15 @@
     "named": true
   },
   {
-    "type": "linear",
+    "type": "mut",
     "named": false
   },
   {
-    "type": "mut",
+    "type": "signal",
+    "named": false
+  },
+  {
+    "type": "str",
     "named": false
   },
   {
@@ -780,6 +765,10 @@
   },
   {
     "type": "undefined",
+    "named": false
+  },
+  {
+    "type": "void",
     "named": false
   },
   {

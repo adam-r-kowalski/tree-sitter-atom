@@ -1,5 +1,5 @@
 {
-  "name": "mantis",
+  "name": "pulse",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -59,10 +59,6 @@
         {
           "type": "SYMBOL",
           "name": "primitive_type"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "array_type"
         },
         {
           "type": "SYMBOL",
@@ -299,7 +295,7 @@
                 },
                 {
                   "type": "STRING",
-                  "value": "linear"
+                  "value": "signal"
                 }
               ]
             },
@@ -1018,6 +1014,18 @@
         {
           "type": "STRING",
           "value": "f64"
+        },
+        {
+          "type": "STRING",
+          "value": "void"
+        },
+        {
+          "type": "STRING",
+          "value": "str"
+        },
+        {
+          "type": "STRING",
+          "value": "html"
         }
       ]
     },
@@ -1066,23 +1074,6 @@
           "value": "]"
         }
       ]
-    },
-    "array_type": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "array"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expression"
-          }
-        ]
-      }
     },
     "identifier": {
       "type": "PATTERN",

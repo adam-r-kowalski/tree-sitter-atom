@@ -1,5 +1,5 @@
 module.exports = grammar({
-  name: "mantis",
+  name: "pulse",
 
   extras: ($) => [$.comment, /\s/],
 
@@ -12,7 +12,7 @@ module.exports = grammar({
         $.function_definition,
         $.struct_definition,
         $.test_definition,
-        $.expression
+        $.expression,
       ),
 
     generic_expression: ($) =>
@@ -23,14 +23,13 @@ module.exports = grammar({
         $.string,
         $.binary_expression,
         $.primitive_type,
-        $.array_type,
         $.array,
         $.call,
         $.conditional,
         $.member,
         $.method_call,
         $.consumed_method_call,
-        "undefined"
+        "undefined",
       ),
 
     expression: ($) => choice($.generic_expression, $.function, $.struct),
@@ -44,16 +43,16 @@ module.exports = grammar({
         prec.left(2, seq($.expression, "-", $.expression)),
         prec.left(1, seq($.expression, ">", $.expression)),
         prec.left(1, seq($.expression, "<", $.expression)),
-        prec.left(1, seq($.expression, "==", $.expression))
+        prec.left(1, seq($.expression, "==", $.expression)),
       ),
 
     definition: ($) =>
       seq(
-        optional(choice("mut", "linear")),
+        optional(choice("mut", "signal")),
         field("name", $.identifier),
         optional(seq(":", field("type", $.expression))),
         "=",
-        field("value", $.generic_expression)
+        field("value", $.generic_expression),
       ),
 
     test_definition: ($) => seq("test", field("name", $.string), $.block),
@@ -63,7 +62,7 @@ module.exports = grammar({
         field("name", $.identifier),
         optional(seq(":", field("type", $.expression))),
         "=",
-        field("value", $.struct)
+        field("value", $.struct),
       ),
 
     struct: ($) =>
@@ -72,7 +71,7 @@ module.exports = grammar({
         "{",
         repeat(seq($.identifier, ":", $.expression, ",")),
         optional(seq($.identifier, ":", $.expression)),
-        "}"
+        "}",
       ),
 
     function_definition: ($) =>
@@ -80,7 +79,7 @@ module.exports = grammar({
         field("name", $.identifier),
         optional(seq(":", field("type", $.expression))),
         "=",
-        field("value", $.function)
+        field("value", $.function),
       ),
 
     function: ($) =>
@@ -88,15 +87,15 @@ module.exports = grammar({
         9,
         seq(
           field("declaration", $.function_declaration),
-          field("body", $.block)
-        )
+          field("body", $.block),
+        ),
       ),
 
     generics: ($) =>
       seq(
         "[",
         optional(seq($.identifier, repeat(seq(",", $.identifier)))),
-        "]"
+        "]",
       ),
 
     function_declaration: ($) =>
@@ -104,7 +103,7 @@ module.exports = grammar({
         "fn",
         field("generics", optional($.generics)),
         field("parameters", $.parameters),
-        field("return_type", $.expression)
+        field("return_type", $.expression),
       ),
 
     parameter: ($) =>
@@ -112,7 +111,7 @@ module.exports = grammar({
         optional(choice("mut", "consume")),
         field("name", $.identifier),
         ":",
-        field("type", $.expression)
+        field("type", $.expression),
       ),
 
     parameters: ($) =>
@@ -122,7 +121,7 @@ module.exports = grammar({
       seq(
         optional(choice("mut", "consume")),
         optional(seq($.identifier, "=")),
-        $.expression
+        $.expression,
       ),
 
     arguments: ($) =>
@@ -145,22 +144,32 @@ module.exports = grammar({
         $.block,
         repeat(seq("else if", $.block)),
         "else",
-        $.block
+        $.block,
       ),
 
     block: ($) => seq("{", repeat($.statement), "}"),
 
     primitive_type: () =>
-      choice("bool", "u8", "u32", "u64", "i32", "i64", "f32", "f64"),
+      choice(
+        "bool",
+        "u8",
+        "u32",
+        "u64",
+        "i32",
+        "i64",
+        "f32",
+        "f64",
+        "void",
+        "str",
+        "html",
+      ),
 
     array: ($) =>
       seq(
         "[",
         optional(seq($.expression, repeat(seq(",", $.expression)))),
-        "]"
+        "]",
       ),
-
-    array_type: ($) => prec(10, seq($.array, $.expression)),
 
     identifier: () => /[_a-zA-Z][_a-zA-Z0-9]*/,
     integer: () => /\d+/,
