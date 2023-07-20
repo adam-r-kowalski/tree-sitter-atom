@@ -11,7 +11,6 @@ module.exports = grammar({
         $.definition,
         $.function_definition,
         $.struct_definition,
-        $.test_definition,
         $.expression,
       ),
 
@@ -27,8 +26,7 @@ module.exports = grammar({
         $.call,
         $.conditional,
         $.member,
-        $.method_call,
-        $.consumed_method_call,
+        $.template_string,
         "undefined",
       ),
 
@@ -48,14 +46,12 @@ module.exports = grammar({
 
     definition: ($) =>
       seq(
-        optional(choice("mut", "signal")),
+        optional("mut"),
         field("name", $.identifier),
         optional(seq(":", field("type", $.expression))),
         "=",
         field("value", $.generic_expression),
       ),
-
-    test_definition: ($) => seq("test", field("name", $.string), $.block),
 
     struct_definition: ($) =>
       seq(
@@ -108,7 +104,7 @@ module.exports = grammar({
 
     parameter: ($) =>
       seq(
-        optional(choice("mut", "consume")),
+        optional("mut"),
         field("name", $.identifier),
         ":",
         field("type", $.expression),
@@ -118,11 +114,7 @@ module.exports = grammar({
       seq("(", optional(seq($.parameter, repeat(seq(",", $.parameter)))), ")"),
 
     argument: ($) =>
-      seq(
-        optional(choice("mut", "consume")),
-        optional(seq($.identifier, "=")),
-        $.expression,
-      ),
+      seq(optional("mut"), optional(seq($.identifier, "=")), $.expression),
 
     arguments: ($) =>
       seq("(", optional(seq($.argument, repeat(seq(",", $.argument)))), ")"),
@@ -132,10 +124,6 @@ module.exports = grammar({
 
     member: ($) =>
       prec(9, seq($.expression, ".", field("field", $.identifier))),
-
-    method_call: ($) => seq($.member, field("arguments", $.arguments)),
-
-    consumed_method_call: ($) => prec(10, seq("consume", $.method_call)),
 
     conditional: ($) =>
       seq(
@@ -161,7 +149,6 @@ module.exports = grammar({
         "f64",
         "void",
         "str",
-        "html",
       ),
 
     array: ($) =>
@@ -176,5 +163,21 @@ module.exports = grammar({
     float: () => /\d+\.\d+/,
     comment: () => token(seq("#", /.*/)),
     string: () => seq('"', repeat(choice(/[^"\\]/, seq("\\", /./))), '"'),
+
+    template_string: ($) =>
+      seq(
+        field("language", $.identifier),
+        "`",
+        field("content", $.template_content),
+        "`",
+      ),
+
+    template_content: ($) =>
+      repeat1(choice($.template_injection, $.template_interpolation)),
+
+    template_injection: () => /(?:[^$`]|(\$[^{]))+/,
+
+    template_interpolation: ($) =>
+      seq("${", field("interpolation", $.expression), "}"),
   },
 });

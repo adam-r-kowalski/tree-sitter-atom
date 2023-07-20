@@ -2,10 +2,7 @@
 
 [
   "mut"
-  "signal"
-  "consume"
   "struct"
-  "test"
 ] @keyword
 
 [
@@ -37,10 +34,7 @@
 (call function: (identifier) @function.call)
 
 ((identifier) @constant.builtin
-	(#any-of? @constant.builtin "assert" "foreign_import" "foreign_export"))
-
-(method_call
-  (member field: (identifier) @method.call))
+	(#any-of? @constant.builtin "assert" "foreign_import" "foreign_export" "test"))
 
 (parameter name: (identifier) @parameter)
 
@@ -65,3 +59,7 @@
 ] @punctuation.bracket
 
 ["," "." ":"] @punctuation.delimiter
+
+(template_string
+  language: (identifier) @keyword)
+

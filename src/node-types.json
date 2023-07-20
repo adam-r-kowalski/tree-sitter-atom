@@ -124,21 +124,6 @@
     }
   },
   {
-    "type": "consumed_method_call",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "method_call",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "definition",
     "named": true,
     "fields": {
@@ -320,10 +305,6 @@
           "named": true
         },
         {
-          "type": "consumed_method_call",
-          "named": true
-        },
-        {
           "type": "float",
           "named": true
         },
@@ -340,15 +321,15 @@
           "named": true
         },
         {
-          "type": "method_call",
-          "named": true
-        },
-        {
           "type": "primitive_type",
           "named": true
         },
         {
           "type": "string",
+          "named": true
+        },
+        {
+          "type": "template_string",
           "named": true
         }
       ]
@@ -390,32 +371,6 @@
       "types": [
         {
           "type": "expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "method_call",
-    "named": true,
-    "fields": {
-      "arguments": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "arguments",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "member",
           "named": true
         }
       ]
@@ -505,10 +460,6 @@
         {
           "type": "struct_definition",
           "named": true
-        },
-        {
-          "type": "test_definition",
-          "named": true
         }
       ]
     }
@@ -574,33 +525,72 @@
     }
   },
   {
-    "type": "test_definition",
+    "type": "template_content",
     "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "block",
+          "type": "template_injection",
+          "named": true
+        },
+        {
+          "type": "template_interpolation",
           "named": true
         }
       ]
     }
   },
   {
+    "type": "template_interpolation",
+    "named": true,
+    "fields": {
+      "interpolation": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "template_string",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "template_content",
+            "named": true
+          }
+        ]
+      },
+      "language": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "\"",
+    "named": false
+  },
+  {
+    "type": "${",
     "named": false
   },
   {
@@ -672,16 +662,16 @@
     "named": false
   },
   {
+    "type": "`",
+    "named": false
+  },
+  {
     "type": "bool",
     "named": false
   },
   {
     "type": "comment",
     "named": true
-  },
-  {
-    "type": "consume",
-    "named": false
   },
   {
     "type": "else",
@@ -705,10 +695,6 @@
   },
   {
     "type": "fn",
-    "named": false
-  },
-  {
-    "type": "html",
     "named": false
   },
   {
@@ -736,10 +722,6 @@
     "named": false
   },
   {
-    "type": "signal",
-    "named": false
-  },
-  {
     "type": "str",
     "named": false
   },
@@ -748,8 +730,8 @@
     "named": false
   },
   {
-    "type": "test",
-    "named": false
+    "type": "template_injection",
+    "named": true
   },
   {
     "type": "u32",
