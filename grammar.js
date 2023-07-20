@@ -79,25 +79,10 @@ module.exports = grammar({
       ),
 
     function: ($) =>
-      prec(
-        9,
-        seq(
-          field("declaration", $.function_declaration),
-          field("body", $.block),
-        ),
-      ),
-
-    generics: ($) =>
-      seq(
-        "[",
-        optional(seq($.identifier, repeat(seq(",", $.identifier)))),
-        "]",
-      ),
+      seq(field("declaration", $.function_declaration), field("body", $.block)),
 
     function_declaration: ($) =>
       seq(
-        "fn",
-        field("generics", optional($.generics)),
         field("parameters", $.parameters),
         field("return_type", $.expression),
       ),
@@ -120,7 +105,10 @@ module.exports = grammar({
       seq("(", optional(seq($.argument, repeat(seq(",", $.argument)))), ")"),
 
     call: ($) =>
-      seq(field("function", $.identifier), field("arguments", $.arguments)),
+      prec(
+        9,
+        seq(field("function", $.identifier), field("arguments", $.arguments)),
+      ),
 
     member: ($) =>
       prec(9, seq($.expression, ".", field("field", $.identifier))),

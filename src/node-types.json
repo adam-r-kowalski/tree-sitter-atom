@@ -212,16 +212,6 @@
     "type": "function_declaration",
     "named": true,
     "fields": {
-      "generics": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "generics",
-            "named": true
-          }
-        ]
-      },
       "parameters": {
         "multiple": false,
         "required": true,
@@ -330,21 +320,6 @@
         },
         {
           "type": "template_string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "generics",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -692,10 +667,6 @@
   {
     "type": "float",
     "named": true
-  },
-  {
-    "type": "fn",
-    "named": false
   },
   {
     "type": "i32",

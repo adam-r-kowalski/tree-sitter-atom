@@ -1,5 +1,3 @@
-"fn" @keyword.function
-
 [
   "mut"
   "struct"
