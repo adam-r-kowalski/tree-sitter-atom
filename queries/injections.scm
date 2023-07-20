@@ -1,3 +1,4 @@
 (template_string
   language: (identifier) @injection.language
-  content: (template_content (template_injection) @injection.content))
+  content: (template_content (template_injection) @injection.content)
+  (#set! injection.combined))
