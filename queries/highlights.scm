@@ -52,6 +52,7 @@
   "]"
   "("
   ")"
+  "${"
   "{"
   "}"
 ] @punctuation.bracket
