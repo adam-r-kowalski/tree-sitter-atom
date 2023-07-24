@@ -1,5 +1,5 @@
 {
-  "name": "zap",
+  "name": "moose",
   "rules": {
     "source_file": {
       "type": "REPEAT",
@@ -1068,3 +1068,4 @@
   "inline": [],
   "supertypes": []
 }
+
