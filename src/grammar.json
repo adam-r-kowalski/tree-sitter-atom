@@ -1,5 +1,5 @@
 {
-  "name": "moose",
+  "name": "atom",
   "rules": {
     "source_file": {
       "type": "REPEAT",
