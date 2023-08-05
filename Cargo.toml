@@ -1,10 +1,10 @@
 [package]
-name = "tree-sitter-atom"
-description = "atom grammar for the tree-sitter parsing library"
+name = "tree-sitter-goat"
+description = "goat grammar for the tree-sitter parsing library"
 version = "0.0.1"
-keywords = ["incremental", "parsing", "atom"]
+keywords = ["incremental", "parsing", "goat"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter/tree-sitter-atom"
+repository = "https://github.com/tree-sitter/tree-sitter-goat"
 edition = "2018"
 license = "MIT"
 
