@@ -1,6 +1,7 @@
 [
   "mut"
   "struct"
+  "fn"
 ] @keyword
 
 [
@@ -25,7 +26,7 @@
 
 (string) @string
 
-(function_definition name: (identifier) @function)
+(function_declaration name: (identifier) @function)
 
 (struct_definition name: (identifier) @type.definition)
 

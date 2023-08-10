@@ -405,7 +405,7 @@
     "standalone_static_library": 1,
     "metrics_registry": "https://registry.npmjs.org/",
     "global_prefix": "/opt/homebrew",
-    "local_prefix": "/Users/adam/code/tree-sitter-goat",
+    "local_prefix": "/Users/adam/code/tree-sitter-orca",
     "globalconfig": "/opt/homebrew/etc/npmrc",
     "auto_install_peers": "true",
     "init_module": "/Users/adam/.npm-init.js",

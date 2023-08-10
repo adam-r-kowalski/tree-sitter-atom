@@ -168,10 +168,6 @@
       "required": true,
       "types": [
         {
-          "type": "function",
-          "named": true
-        },
-        {
           "type": "generic_expression",
           "named": true
         },
@@ -212,6 +208,16 @@
     "type": "function_declaration",
     "named": true,
     "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "parameters": {
         "multiple": false,
         "required": true,
@@ -228,42 +234,6 @@
         "types": [
           {
             "type": "expression",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "function_definition",
-    "named": true,
-    "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "function",
             "named": true
           }
         ]
@@ -296,6 +266,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "function_declaration",
           "named": true
         },
         {
@@ -429,7 +403,7 @@
           "named": true
         },
         {
-          "type": "function_definition",
+          "type": "function",
           "named": true
         },
         {
@@ -597,6 +571,10 @@
     "named": false
   },
   {
+    "type": "->",
+    "named": false
+  },
+  {
     "type": ".",
     "named": false
   },
@@ -667,6 +645,10 @@
   {
     "type": "float",
     "named": true
+  },
+  {
+    "type": "fn",
+    "named": false
   },
   {
     "type": "i32",

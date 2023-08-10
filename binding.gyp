@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "tree_sitter_Goat_binding",
+      "target_name": "tree_sitter_Orca_binding",
       "include_dirs": [
         "<!(node -e \"require('nan')\")",
         "src"

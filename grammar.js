@@ -1,5 +1,5 @@
 module.exports = grammar({
-  name: "goat",
+  name: "orca",
 
   extras: ($) => [$.comment, /\s/],
 
@@ -7,12 +7,7 @@ module.exports = grammar({
     source_file: ($) => repeat($.statement),
 
     statement: ($) =>
-      choice(
-        $.definition,
-        $.function_definition,
-        $.struct_definition,
-        $.expression,
-      ),
+      choice($.definition, $.struct_definition, $.expression, $.function),
 
     generic_expression: ($) =>
       choice(
@@ -27,10 +22,11 @@ module.exports = grammar({
         $.conditional,
         $.member,
         $.template_string,
+        $.function_declaration,
         "undefined",
       ),
 
-    expression: ($) => choice($.generic_expression, $.function, $.struct),
+    expression: ($) => choice($.generic_expression, $.struct),
 
     binary_expression: ($) =>
       choice(
@@ -70,20 +66,15 @@ module.exports = grammar({
         "}",
       ),
 
-    function_definition: ($) =>
-      seq(
-        field("name", $.identifier),
-        optional(seq(":", field("type", $.expression))),
-        "=",
-        field("value", $.function),
-      ),
-
     function: ($) =>
       seq(field("declaration", $.function_declaration), field("body", $.block)),
 
     function_declaration: ($) =>
       seq(
+        "fn",
+        field("name", $.identifier),
         field("parameters", $.parameters),
+        "->",
         field("return_type", $.expression),
       ),
 
