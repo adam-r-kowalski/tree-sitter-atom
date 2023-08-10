@@ -124,6 +124,32 @@
     }
   },
   {
+    "type": "decorator",
+    "named": true,
+    "fields": {
+      "arguments": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "arguments",
+            "named": true
+          }
+        ]
+      },
+      "attribute": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "attribute",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "definition",
     "named": true,
     "fields": {
@@ -253,6 +279,10 @@
           "named": true
         },
         {
+          "type": "attribute",
+          "named": true
+        },
+        {
           "type": "binary_expression",
           "named": true
         },
@@ -262,6 +292,10 @@
         },
         {
           "type": "conditional",
+          "named": true
+        },
+        {
+          "type": "decorator",
           "named": true
         },
         {
@@ -617,6 +651,10 @@
   {
     "type": "`",
     "named": false
+  },
+  {
+    "type": "attribute",
+    "named": true
   },
   {
     "type": "bool",

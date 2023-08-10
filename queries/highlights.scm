@@ -32,8 +32,10 @@
 
 (call function: (identifier) @function.call)
 
+(decorator attribute: (attribute) @constant.builtin)
+
 ((identifier) @constant.builtin
-	(#any-of? @constant.builtin "assert" "foreign_import" "foreign_export" "test"))
+	(#any-of? @constant.builtin "assert" "foreign_export" "test"))
 
 (parameter name: (identifier) @parameter)
 

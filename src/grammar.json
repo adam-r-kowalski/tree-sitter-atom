@@ -34,6 +34,10 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "attribute"
+        },
+        {
+          "type": "SYMBOL",
           "name": "identifier"
         },
         {
@@ -63,6 +67,10 @@
         {
           "type": "SYMBOL",
           "name": "call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "decorator"
         },
         {
           "type": "SYMBOL",
@@ -704,6 +712,31 @@
         ]
       }
     },
+    "decorator": {
+      "type": "PREC",
+      "value": 9,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "attribute",
+            "content": {
+              "type": "SYMBOL",
+              "name": "attribute"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "arguments",
+            "content": {
+              "type": "SYMBOL",
+              "name": "arguments"
+            }
+          }
+        ]
+      }
+    },
     "member": {
       "type": "PREC",
       "value": 9,
@@ -880,6 +913,10 @@
           "value": "]"
         }
       ]
+    },
+    "attribute": {
+      "type": "PATTERN",
+      "value": "@[_a-zA-Z][_a-zA-Z0-9]*"
     },
     "identifier": {
       "type": "PATTERN",
