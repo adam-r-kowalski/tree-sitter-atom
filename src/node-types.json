@@ -234,6 +234,10 @@
           "named": true
         },
         {
+          "type": "match",
+          "named": true
+        },
+        {
           "type": "member",
           "named": true
         },
@@ -316,6 +320,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "match",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -678,6 +697,10 @@
   {
     "type": "integer",
     "named": true
+  },
+  {
+    "type": "match",
+    "named": false
   },
   {
     "type": "mut",

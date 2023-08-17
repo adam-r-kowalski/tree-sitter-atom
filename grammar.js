@@ -25,6 +25,7 @@ module.exports = grammar({
         $.template_string,
         $.function_declaration,
         $.struct,
+        $.match,
         "undefined",
       ),
 
@@ -58,7 +59,24 @@ module.exports = grammar({
         "}",
       ),
 
+    match: ($) =>
+      seq(
+        "match",
+        "{",
+        repeat1(seq($.expression, "{", $.expression, "}", optional(","))),
+        "}",
+      ),
+
     struct_field: ($) => seq($.identifier, ":", $.expression, optional(",")),
+
+    struct: ($) =>
+      seq(
+        "struct",
+        field("name", $.identifier),
+        "{",
+        repeat1($.struct_field),
+        "}",
+      ),
 
     function: ($) =>
       seq(field("declaration", $.function_declaration), field("body", $.block)),

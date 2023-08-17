@@ -2,6 +2,7 @@
   "mut"
   "struct"
   "fn"
+  "match"
 ] @keyword
 
 [
