@@ -28,7 +28,7 @@
 
 (function_declaration name: (identifier) @function)
 
-(struct_definition name: (identifier) @type.definition)
+(struct name: (identifier) @type.definition)
 
 (call function: (identifier) @function.call)
 

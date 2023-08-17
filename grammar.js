@@ -6,10 +6,9 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($.statement),
 
-    statement: ($) =>
-      choice($.definition, $.struct_definition, $.expression, $.function),
+    statement: ($) => choice($.definition, $.expression, $.function),
 
-    generic_expression: ($) =>
+    expression: ($) =>
       choice(
         $.attribute,
         $.identifier,
@@ -25,10 +24,9 @@ module.exports = grammar({
         $.member,
         $.template_string,
         $.function_declaration,
+        $.struct,
         "undefined",
       ),
-
-    expression: ($) => choice($.generic_expression, $.struct),
 
     binary_expression: ($) =>
       choice(
@@ -48,25 +46,19 @@ module.exports = grammar({
         field("name", $.identifier),
         optional(seq(":", field("type", $.expression))),
         "=",
-        field("value", $.generic_expression),
-      ),
-
-    struct_definition: ($) =>
-      seq(
-        field("name", $.identifier),
-        optional(seq(":", field("type", $.expression))),
-        "=",
-        field("value", $.struct),
+        field("value", $.expression),
       ),
 
     struct: ($) =>
       seq(
         "struct",
+        field("name", $.identifier),
         "{",
-        repeat(seq($.identifier, ":", $.expression, ",")),
-        optional(seq($.identifier, ":", $.expression)),
+        repeat1($.struct_field),
         "}",
       ),
+
+    struct_field: ($) => seq($.identifier, ":", $.expression, optional(",")),
 
     function: ($) =>
       seq(field("declaration", $.function_declaration), field("body", $.block)),
