@@ -3,6 +3,7 @@
   "struct"
   "fn"
   "match"
+  "test"
 ] @keyword
 
 [

@@ -6,7 +6,7 @@ module.exports = grammar({
   rules: {
     source_file: ($) => repeat($.statement),
 
-    statement: ($) => choice($.definition, $.expression, $.function),
+    statement: ($) => choice($.definition, $.expression, $.function, $.test),
 
     expression: ($) =>
       choice(
@@ -26,6 +26,7 @@ module.exports = grammar({
         $.function_declaration,
         $.struct,
         $.match,
+        $.record,
         "undefined",
       ),
 
@@ -59,6 +60,16 @@ module.exports = grammar({
         "}",
       ),
 
+    record: ($) =>
+      prec(
+        9,
+        seq(
+          "{",
+          repeat1(seq($.identifier, ":", $.expression, optional(","))),
+          "}",
+        ),
+      ),
+
     match: ($) =>
       seq(
         "match",
@@ -78,8 +89,16 @@ module.exports = grammar({
         "}",
       ),
 
+    test: ($) => seq("test", field("name", $.string), $.block),
+
     function: ($) =>
-      seq(field("declaration", $.function_declaration), field("body", $.block)),
+      prec(
+        9,
+        seq(
+          field("declaration", $.function_declaration),
+          field("body", $.block),
+        ),
+      ),
 
     function_declaration: ($) =>
       seq(
