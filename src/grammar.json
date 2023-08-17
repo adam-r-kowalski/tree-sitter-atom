@@ -1,5 +1,5 @@
 {
-  "name": "orca",
+  "name": "wave",
   "rules": {
     "source_file": {
       "type": "REPEAT",
