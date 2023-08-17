@@ -4,6 +4,7 @@
   "fn"
   "match"
   "test"
+  "for"
 ] @keyword
 
 [

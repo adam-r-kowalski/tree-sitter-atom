@@ -27,6 +27,7 @@ module.exports = grammar({
         $.struct,
         $.match,
         $.record,
+        $.for,
         "undefined",
       ),
 
@@ -69,6 +70,8 @@ module.exports = grammar({
           "}",
         ),
       ),
+
+    for: ($) => seq("for", repeat1(seq($.identifier, optional(","))), $.block),
 
     match: ($) =>
       seq(
