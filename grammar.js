@@ -17,6 +17,7 @@ module.exports = grammar({
         $.string,
         $.binary_expression,
         $.primitive_type,
+        $.array_type,
         $.array,
         $.call,
         $.decorator,
@@ -174,10 +175,22 @@ module.exports = grammar({
       ),
 
     array: ($) =>
-      seq(
-        "[",
-        optional(seq($.expression, repeat(seq(",", $.expression)))),
-        "]",
+      prec(
+        8,
+        seq(
+          "[",
+          optional(seq($.expression, repeat(seq(",", $.expression)))),
+          "]",
+        ),
+      ),
+
+    array_type: ($) =>
+      prec(
+        9,
+        seq(
+          repeat1(seq("[", "]")),
+          field("type", choice($.primitive_type, $.identifier)),
+        ),
       ),
 
     attribute: () => /@[_a-zA-Z][_a-zA-Z0-9]*/,

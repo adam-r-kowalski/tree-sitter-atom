@@ -49,6 +49,26 @@
     }
   },
   {
+    "type": "array_type",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "primitive_type",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "binary_expression",
     "named": true,
     "fields": {},
@@ -195,6 +215,10 @@
       "types": [
         {
           "type": "array",
+          "named": true
+        },
+        {
+          "type": "array_type",
           "named": true
         },
         {
