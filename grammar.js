@@ -190,11 +190,14 @@ module.exports = grammar({
     string: () => seq('"', repeat(choice(/[^"\\]/, seq("\\", /./))), '"'),
 
     template_string: ($) =>
-      seq(
-        field("language", $.identifier),
-        "`",
-        field("content", $.template_content),
-        "`",
+      prec(
+        9,
+        seq(
+          optional(field("language", $.identifier)),
+          "`",
+          field("content", $.template_content),
+          "`",
+        ),
       ),
 
     template_content: ($) =>

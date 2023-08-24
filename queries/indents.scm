@@ -1,3 +1,1 @@
-(block "{") @indent.begin
-
-(block "}") @indent.end
+(block) @indent

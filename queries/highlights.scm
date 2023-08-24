@@ -68,3 +68,4 @@
 (template_string
   language: (identifier) @keyword)
 
+(template_injection) @string
