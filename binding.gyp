@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "tree_sitter_Wave_binding",
+      "target_name": "tree_sitter_Atom_binding",
       "include_dirs": [
         "<!(node -e \"require('nan')\")",
         "src"

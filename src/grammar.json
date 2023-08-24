@@ -1,5 +1,5 @@
 {
-  "name": "wave",
+  "name": "atom",
   "rules": {
     "source_file": {
       "type": "REPEAT",
