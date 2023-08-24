@@ -27,7 +27,6 @@ module.exports = grammar({
         $.function_declaration,
         $.struct,
         $.match,
-        $.record,
         $.for,
         "undefined",
       ),
@@ -60,16 +59,6 @@ module.exports = grammar({
         "{",
         repeat1($.struct_field),
         "}",
-      ),
-
-    record: ($) =>
-      prec(
-        9,
-        seq(
-          "{",
-          repeat1(seq($.identifier, ":", $.expression, optional(","))),
-          "}",
-        ),
       ),
 
     for: ($) => seq("for", repeat1(seq($.identifier, optional(","))), $.block),
